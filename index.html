@@ -1,89 +1,54 @@
 <!DOCTYPE html>
-<!--
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
+<html lang="zh-tw">
 
-<html>
 <head>
-
-    <meta charset="utf-8">
-    <meta name="description" content="WebRTC code samples">
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
-    <meta itemprop="description" content="Client-side WebRTC code samples">
-    <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
-    <meta itemprop="name" content="WebRTC code samples">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta id="theme-color" name="theme-color" content="#ffffff">
-
-    <base target="_blank">
-
-    <title>getUserMedia</title>
-
-    <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../../css/main.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>instascan：純前端掃描 QR Code</title>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 </head>
 
 <body>
+  <video id="preview"></video>
+  <script type="text/javascript">
+    let scanner = new Instascan.Scanner({
+      continuous: true, // 連續掃描
+      video: document.getElementById('preview'), // 預覽
+      facingMode: {
+        exact: "environment"
+      }
+    });
+    scanner.addListener('scan', function (content) {
 
-<div id="container">
-    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a>
-        <span>getUserMedia</span></h1>
+      console.log(content);
+      getConfirmation();
 
-    <video id="gum-local" autoplay playsinline></video>
-    <button id="showVideo">Open camera</button>
-
-    <div id="errorMsg"></div>
-
-    <p class="warning"><strong>Warning:</strong> if you're not using headphones, pressing play will cause feedback.</p>
-
-    <p>Display the video stream from <code>getUserMedia()</code> in a video element.</p>
-
-    <p>The <code>MediaStream</code> object <code>stream</code> passed to the <code>getUserMedia()</code> callback is in
-        global scope, so you can inspect it from the console.</p>
-
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/gum"
-       title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
-</div>
-
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="js/main.js"></script>
-
-<script src="../../../js/lib/ga.js"></script>
-
-</body>
-</html>
-
-
--->
-
-
-
-<html>
-  <head>
-    <title>Instascan</title>
-    <script type="text/javascript" src="instascan.min.js"></script>
-  </head>
-  <body>
-    <video id="preview"></video>
-    <script type="text/javascript">
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-      scanner.addListener('scan', function (content) {
-        console.log(content);
-      });
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-          scanner.start(cameras[0]);
+      function getConfirmation() {
+        var retVal = confirm("掃描結果：" + content); // 掃描結果顯示
+        if (retVal == true) {
+          var checkurl = /^((https?|http?|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/; // 檢查是否為網址
+          if (checkurl.test(content)) {
+            window.open(content, "_self"); // 開啟網址
+          }
+          return true;
         } else {
-          console.error('No cameras found.');
+          return false;
         }
-      }).catch(function (e) {
-        console.error(e);
-      });
-    </script>
-  </body>
+      }
+
+
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+      if (cameras.length > 0) {
+        scanner.start(cameras[1]); // [0] 前鏡頭 [1] 後鏡頭 
+      } else {
+        console.error('沒有找到相機');
+      }
+    }).catch(function (e) {
+      console.error(e);
+    });
+  </script>
+</body>
+
 </html>
