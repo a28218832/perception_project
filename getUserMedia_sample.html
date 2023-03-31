@@ -25,7 +25,7 @@
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="js/main.css">
+    <link rel="stylesheet" href="../../../css/main.css">
 
 </head>
 
@@ -36,7 +36,7 @@
         <span>getUserMedia</span></h1>
 
     <video id="gum-local" autoplay playsinline></video>
-    <button id="showVideo">Choose camera</button>
+    <button id="showVideo">Open camera</button>
 
     <div id="errorMsg"></div>
 
@@ -51,65 +51,10 @@
        title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
 </div>
 
-
-<div>
-    <h2>Select camera:</h2>
-    <div id="cameraBtns"></div>
-  </div>
-  
-  <script>
-    const constraints = {
-      audio: false,
-      video: true
-    };
-  
-    const cameraBtns = document.querySelector('#cameraBtns');
-  
-    // Get the available cameras and create a button for each one
-    navigator.mediaDevices.enumerateDevices()
-      .then(devices => {
-        const cameras = devices.filter(device => device.kind === 'videoinput');
-  
-        if (cameras.length === 0) {
-          throw 'No cameras found';
-        }
-  
-        cameras.forEach(camera => {
-          const btn = document.createElement('button');
-          btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
-          btn.addEventListener('click', () => {
-            constraints.video = { deviceId: { exact: camera.deviceId } };
-            init();
-          });
-          cameraBtns.appendChild(btn);
-        });
-      })
-      .catch(error => console.error(error));
-  
-    async function init() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        handleSuccess(stream);
-      } catch (e) {
-        handleError(e);
-      }
-    }
-  
-    function handleSuccess(stream) {
-      const video = document.querySelector('video');
-      video.srcObject = stream;
-    }
-  
-    function handleError(error) {
-      console.error(error);
-    }
-  </script>
-  
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="js/main.js"></script>
 
-<script src="js/lib/ga.js"></script>
-
+<script src="../../../js/lib/ga.js"></script>
 
 </body>
 </html>

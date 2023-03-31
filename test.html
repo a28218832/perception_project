@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<title>使用inline方式在網頁中加入JavaScript</title>
+<meta charset="utf-8">
+</head>
+<body>
+    <div>
+        <p id="js1">按下按鈕在此顯示時間</p>
+        <button type="button" onclick="document.getElementById('js1').innerHTML = Date()">點選顯示時間</button>   
+    </div>
+    <div>
+        <p id="js2">按下按鈕更改文字大小</p>
+        <button type="button" onclick="document.getElementById('js2').style.fontSize='30px'">文字設定為30px</button>
+        <button type="button" onclick="document.getElementById('js2').style.fontSize='20px'">文字設定為20px</button>
+    </div>
+</body>
+</html>
