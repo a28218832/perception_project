@@ -32,59 +32,16 @@
 <body>
 
 <div id="container">
-    <script>
-        const constraints = {
-          audio: false,
-          video: true
-        };
-      
-        const cameraBtns = document.querySelector('#cameraBtns');
-      
-        // Get the available cameras and create a button for each one
-        navigator.mediaDevices.enumerateDevices()
-          .then(devices => {
-            const cameras = devices.filter(device => device.kind === 'videoinput');
-      
-            if (cameras.length === 0) {
-              throw 'No cameras found';
-            }
-      
-            cameras.forEach(camera => {
-              const btn = document.createElement('button');
-              btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
-              btn.addEventListener('click', () => {
-                constraints.video = { deviceId: { exact: camera.deviceId } };
-                init();
-              });
-              cameraBtns.appendChild(btn);
-            });
-          })
-          .catch(error => console.error(error));
-      
-        async function init() {
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            handleSuccess(stream);
-          } catch (e) {
-            handleError(e);
-          }
-        }
-      
-        function handleSuccess(stream) {
-          const video = document.querySelector('video');
-          video.srcObject = stream;
-        }
-      
-        function handleError(error) {
-          console.error(error);
-        }
-    </script>
 
     <!--
     <video id="gum-local" autoplay playsinline></video>
     -->
     <video id="localVideo" autoplay></video>
     <video id="remoteVideo" autoplay></video>
+
+
+
+
 
     <div id="errorMsg"></div>
 
@@ -93,7 +50,53 @@
 
 </div>
 
-
+<script>
+    const constraints = {
+      audio: false,
+      video: true
+    };
+  
+    const cameraBtns = document.querySelector('#cameraBtns');
+  
+    // Get the available cameras and create a button for each one
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        const cameras = devices.filter(device => device.kind === 'videoinput');
+  
+        if (cameras.length === 0) {
+          throw 'No cameras found';
+        }
+  
+        cameras.forEach(camera => {
+          const btn = document.createElement('button');
+          btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
+          btn.addEventListener('click', () => {
+            constraints.video = { deviceId: { exact: camera.deviceId } };
+            init();
+          });
+          cameraBtns.appendChild(btn);
+        });
+      })
+      .catch(error => console.error(error));
+  
+    async function init() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+      } catch (e) {
+        handleError(e);
+      }
+    }
+  
+    function handleSuccess(stream) {
+      const video = document.querySelector('video');
+      video.srcObject = stream;
+    }
+  
+    function handleError(error) {
+      console.error(error);
+    }
+</script>
 
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
