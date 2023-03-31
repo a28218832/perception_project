@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--
  *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
@@ -5,7 +6,7 @@
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
-
+-->
 <html>
 <head>
 
@@ -20,7 +21,7 @@
 
     <base target="_blank">
 
-    <title>getUserMedia</title>
+    <title>PER getUserMedia</title>
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
@@ -56,34 +57,4 @@
 <script src="../../../js/lib/ga.js"></script>
 
 </body>
-</html>
-
-
--->
-
-
-
-<html>
-  <head>
-    <title>Instascan</title>
-    <script type="text/javascript" src="instascan.min.js"></script>
-  </head>
-  <body>
-    <video id="preview"></video>
-    <script type="text/javascript">
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-      scanner.addListener('scan', function (content) {
-        console.log(content);
-      });
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-          scanner.start(cameras[0]);
-        } else {
-          console.error('No cameras found.');
-        }
-      }).catch(function (e) {
-        console.error(e);
-      });
-    </script>
-  </body>
 </html>
