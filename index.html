@@ -33,12 +33,13 @@
 
 <div id="container">
 
-    
-    <video id="gum-local" autoplay playsinline></video>
     <!--
-    <video id="localVideo" autoplay></video>
-    <video id="remoteVideo" autoplay></video>
+    <video id="gum-local" autoplay playsinline></video>
     -->
+    
+    <video id="localVideo" autoplay playsinline></video>
+    <video id="remoteVideo" autoplay playsinline></video>
+    
 
 
 
@@ -49,6 +50,103 @@
 
 
 </div>
+
+
+  
+  <div id="btnContainer">
+    <div id="btnWrap">
+      <h2>Select camera:</h2>
+      <div id="cameraBtns"></div>
+    </div>
+  </div>
+  
+  <style>
+    #btnContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background-color: white;
+    }
+  
+    #btnWrap {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  
+    #cameraBtns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  
+    #cameraBtns button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid black;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+    }
+  
+    #cameraBtns button:hover {
+      background-color: black;
+      color: white;
+    }
+  </style>
+  
+  <script>
+    const constraints = {
+      audio: false,
+      video: true
+    };
+  
+    const cameraBtns = document.querySelector('#cameraBtns');
+  
+    // Get the available cameras and create a button for each one
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        const cameras = devices.filter(device => device.kind === 'videoinput');
+  
+        if (cameras.length === 0) {
+          throw 'No cameras found';
+        }
+  
+        cameras.forEach(camera => {
+          const btn = document.createElement('button');
+          btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
+          btn.addEventListener('click', () => {
+            constraints.video = { deviceId: { exact: camera.deviceId } };
+            init();
+          });
+          cameraBtns.appendChild(btn);
+        });
+      })
+      .catch(error => console.error(error));
+  
+    async function init() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+      } catch (e) {
+        handleError(e);
+      }
+    }
+  
+    function handleSuccess(stream) {
+      const video = document.querySelector('video');
+      video.srcObject = stream;
+    }
+  
+    function handleError(error) {
+      console.error(error);
+    }
+  </script>
+  
+
+<!--
 
 <div>
     <h2>Select camera:</h2>
@@ -102,7 +200,7 @@
       console.error(error);
     }
 </script>
-
+-->
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="js/main.js"></script>
