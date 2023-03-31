@@ -53,3 +53,34 @@ async function init(e) {
 }
 
 document.querySelector('#showVideo').addEventListener('click', e => init(e));
+
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~
+
+
+
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+
+localVideo.addEventListener('click', () => {
+  if (localVideo.requestFullscreen) {
+    localVideo.requestFullscreen();
+  } else if (localVideo.webkitRequestFullscreen) { /* Safari */
+    localVideo.webkitRequestFullscreen();
+  } else if (localVideo.msRequestFullscreen) { /* IE11 */
+    localVideo.msRequestFullscreen();
+  }
+});
+
+remoteVideo.addEventListener('click', () => {
+  if (remoteVideo.requestFullscreen) {
+    remoteVideo.requestFullscreen();
+  } else if (remoteVideo.webkitRequestFullscreen) { /* Safari */
+    remoteVideo.webkitRequestFullscreen();
+  } else if (remoteVideo.msRequestFullscreen) { /* IE11 */
+    remoteVideo.msRequestFullscreen();
+  }
+});
+
