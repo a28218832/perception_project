@@ -45,8 +45,9 @@ function handleSuccess(stream) {
   console.log('Got stream with constraints:', constraints);
   console.log(`Using video device: ${videoTracks[0].label}`);
   window.stream = stream; // make variable available to browser console
-  video1.srcObject = stream;
   video2.srcObject = stream;
+  video1.srcObject = stream;
+  
 }
 
 
@@ -102,15 +103,30 @@ localVideo.addEventListener('click', () => {
   } else if (localVideo.msRequestFullscreen) { /* IE11 */
     localVideo.msRequestFullscreen();
   }
+  if (remoteVideo.requestFullscreen) {
+    remoteVideo.requestFullscreen();
+  } else if (remoteVideo.webkitRequestFullscreen) { //Safari ///
+    remoteVideo.webkitRequestFullscreen();
+  } else if (remoteVideo.msRequestFullscreen) { // IE11 //
+    remoteVideo.msRequestFullscreen();
+  }
+
+
+
 });
 
+
+
+/*
 remoteVideo.addEventListener('click', () => {
   if (remoteVideo.requestFullscreen) {
     remoteVideo.requestFullscreen();
-  } else if (remoteVideo.webkitRequestFullscreen) { /* Safari */
+  } else if (remoteVideo.webkitRequestFullscreen) { //Safari ///
     remoteVideo.webkitRequestFullscreen();
-  } else if (remoteVideo.msRequestFullscreen) { /* IE11 */
+  } else if (remoteVideo.msRequestFullscreen) { // IE11 //
     remoteVideo.msRequestFullscreen();
   }
 });
+
+*/
 
