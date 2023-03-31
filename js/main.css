@@ -13,9 +13,17 @@
 
 
 
-
-
-
+/*
+ .container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+*/
 
 
  .container {
@@ -24,6 +32,7 @@
   justify-content: space-between;
   align-items: stretch;
 }
+
 
 video {
   background: #222;

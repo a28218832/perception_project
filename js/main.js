@@ -13,6 +13,21 @@ const constraints = window.constraints = {
   video: true
 };
 
+
+/*
+function handleSuccess(stream) {
+  const video1 = document.querySelector('#video1');
+  const video2 = document.querySelector('#video2');
+  const videoTracks = stream.getVideoTracks();
+  console.log('Got stream with constraints:', constraints);
+  console.log(`Using video device: ${videoTracks[0].label}`);
+  window.stream = stream; // make variable available to browser console
+  video1.srcObject = stream;
+  video2.srcObject = stream;
+}
+*/
+
+/*
 function handleSuccess(stream) {
   const video = document.querySelector('video');
   const videoTracks = stream.getVideoTracks();
@@ -21,6 +36,21 @@ function handleSuccess(stream) {
   window.stream = stream; // make variable available to browser console
   video.srcObject = stream;
 }
+*/
+
+function handleSuccess(stream) {
+  const video1 = document.querySelector('#localVideo');
+  const video2 = document.querySelector('#remoteVideo');
+  const videoTracks = stream.getVideoTracks();
+  console.log('Got stream with constraints:', constraints);
+  console.log(`Using video device: ${videoTracks[0].label}`);
+  window.stream = stream; // make variable available to browser console
+  video1.srcObject = stream;
+  video2.srcObject = stream;
+}
+
+
+
 
 function handleError(error) {
   if (error.name === 'OverconstrainedError') {
