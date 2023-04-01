@@ -45,8 +45,9 @@ function handleSuccess(stream) {
   console.log('Got stream with constraints:', constraints);
   console.log(`Using video device: ${videoTracks[0].label}`);
   window.stream = stream; // make variable available to browser console
-  video1.srcObject = stream;
   video2.srcObject = stream;
+  video1.srcObject = stream;
+  
   
 }
 
