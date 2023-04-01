@@ -100,7 +100,7 @@
               btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
               btn.addEventListener('click', () => {
                 constraints.video = { deviceId: { exact: camera.deviceId } };
-                localStorage.setItem('constraints', constraints);
+                localStorage.setItem('deviceId', camera.deviceId);
                 init();
               });
               cameraBtns.appendChild(btn);

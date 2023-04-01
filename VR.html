@@ -104,16 +104,17 @@
   </style>
   
   <script>
-    /*
+    
     const constraints = {
       audio: false,
       video: true
     };
-    */
+    
 
-    const constraints = localStorage.getItem('constraints');
-    document.getElementById('cons').innerHTML =  constraints
+    constraints.video = { deviceId: { exact: localStorage.getItem('deviceId') } };
     init();
+
+    
     function errorMsg(msg, error) {
     const errorElement = document.querySelector('#errorMsg');
     errorElement.innerHTML += `<p>${msg}</p>`;
@@ -236,10 +237,12 @@
 </script>
 -->
 
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="js/main.js"></script>
+<script src="js/adapter-latest.js"></script>
+<!--
+    <script src="js/main.js"></script>
+-->
 
-<script src="js/lib/ga.js"></script>
+<script src="js/ga.js"></script>
 
 
 </body>
