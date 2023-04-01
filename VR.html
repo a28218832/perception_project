@@ -40,7 +40,8 @@
     <video id="video2" autoplay playsinline></video>   
 
     -->
-    
+    console.log(document.fullscreenEnabled)
+    <button id="fullScreen">Full Screen</button>
     <video id="localVideo" autoplay playsinline></video>
     <video id="remoteVideo" autoplay playsinline></video>
  
@@ -53,13 +54,16 @@
 </div>
 
 
-
-
-
+<script >
+    const fullScreen = document.querySelector('#fullScreen');
+    fullScreen.addEventListener('click', () => {
+        document.documentElement.requestFullscreen();
+    });
+</script>
 
   
   <script>
-    document.documentElement.requestFullscreen();
+    
     const constraints = {
       audio: false,
       video: true
