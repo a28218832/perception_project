@@ -25,41 +25,41 @@
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../../css/main.css">
+    <link rel="stylesheet" href="js/main.css">
 
 </head>
 
 <body>
 
 <div id="container">
-    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a>
-        <span>getUserMedia</span></h1>
 
+    <!--
     <video id="gum-local" autoplay playsinline></video>
+    
+    <video id="video1" autoplay playsinline></video>
+    <video id="video2" autoplay playsinline></video>   
+
+    -->
+    
+    <video id="localVideo" autoplay playsinline src="stream"></video>
+    <video id="remoteVideo" autoplay playsinline src="stream"></video>
+ 
 
     <div id="errorMsg"></div>
 
     <p class="warning"><strong>Warning:</strong> if you're not using headphones, pressing play will cause feedback.</p>
 
-    <p>Display the video stream from <code>getUserMedia()</code> in a video element.</p>
 
-    <p>The <code>MediaStream</code> object <code>stream</code> passed to the <code>getUserMedia()</code> callback is in
-        global scope, so you can inspect it from the console.</p>
-
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/gum"
-       title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
 </div>
 
 
-
   
-<div id="btnContainer">
+  <div id="btnContainer">
     <div id="btnWrap">
       <h2>Select camera:</h2>
-      
+      <button onclick="window.location.href='./test.html'">進入下一個頁面</button>
       <div id="cameraBtns"></div>
     </div>
-    <button onclick="window.location.href='./test.html'">進入下一個頁面</button>
   </div>
   
 
@@ -142,6 +142,75 @@
     }
   
     function handleSuccess(stream) {
+      //const video = document.querySelector('video');
+      //video.srcObject = stream;
+
+        const video1 = document.querySelector('#localVideo');
+        const video2 = document.querySelector('#remoteVideo');
+        const videoTracks = stream.getVideoTracks();
+        console.log('Got stream with constraints:', constraints);
+        console.log(`Using video device: ${videoTracks[0].label}`);
+        //window.stream = stream; // make variable available to browser console
+        video2.srcObject = stream;
+        video1.srcObject = stream;
+    }
+  
+    function handleError(error) {
+      console.error(error);
+    }
+  </script>
+  
+
+
+
+
+
+<!--
+
+<div>
+    <h2>Select camera:</h2>
+    <div id="cameraBtns"></div>
+  </div>
+
+<script>
+    const constraints = {
+      audio: false,
+      video: true
+    };
+  
+    const cameraBtns = document.querySelector('#cameraBtns');
+  
+    // Get the available cameras and create a button for each one
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        const cameras = devices.filter(device => device.kind === 'videoinput');
+  
+        if (cameras.length === 0) {
+          throw 'No cameras found';
+        }
+  
+        cameras.forEach(camera => {
+          const btn = document.createElement('button');
+          btn.innerText = camera.label || `Camera ${camera.deviceId.slice(0, 8)}`;
+          btn.addEventListener('click', () => {
+            constraints.video = { deviceId: { exact: camera.deviceId } };
+            init();
+          });
+          cameraBtns.appendChild(btn);
+        });
+      })
+      .catch(error => console.error(error));
+  
+    async function init() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+      } catch (e) {
+        handleError(e);
+      }
+    }
+  
+    function handleSuccess(stream) {
       const video = document.querySelector('video');
       video.srcObject = stream;
     }
@@ -149,15 +218,14 @@
     function handleError(error) {
       console.error(error);
     }
-  </script>
-
-
-<script src="js/adapter-latest.js"></script>
-<!--
-    <script src="js/main.js"></script>
+</script>
 -->
 
-<script src="js/ga.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="js/main.js"></script>
+
+<script src="js/lib/ga.js"></script>
+
 
 </body>
 </html>
