@@ -152,8 +152,8 @@
         const videoTracks = stream.getVideoTracks();
 
         //window.stream = stream; // make variable available to browser console
-        video2.srcObject = window.stream;
-        video1.srcObject = window.stream;
+        video2.srcObject = stream;
+        video1.srcObject = stream;
     }
   
     function handleError(error) {
