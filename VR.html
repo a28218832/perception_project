@@ -57,7 +57,7 @@
   <div id="btnContainer">
     <div id="btnWrap">
       <h2>Select camera:</h2>
-      <button onclick="window.location.href='./test.html'">進入下一個頁面</button>
+      <p id="cons">constraints</p>
       <div id="cameraBtns"></div>
     </div>
   </div>
@@ -112,7 +112,15 @@
     */
 
     const constraints = localStorage.getItem('constraints');
+    document.getElementById('cons').innerHTML =  constraints
     init();
+    function errorMsg(msg, error) {
+    const errorElement = document.querySelector('#errorMsg');
+    errorElement.innerHTML += `<p>${msg}</p>`;
+    if (typeof error !== 'undefined') {
+      console.error(error);
+    }
+  }
 
   
     const cameraBtns = document.querySelector('#cameraBtns');
