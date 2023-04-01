@@ -104,10 +104,16 @@
   </style>
   
   <script>
+    /*
     const constraints = {
       audio: false,
       video: true
     };
+    */
+
+    const constraints = localStorage.getItem('constraints');
+    init();
+
   
     const cameraBtns = document.querySelector('#cameraBtns');
   
