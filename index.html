@@ -40,8 +40,9 @@
     <video id="video2" autoplay playsinline></video>   
 
     -->
-    <video id="localVideo" autoplay playsinline></video>
-    <video id="remoteVideo" autoplay playsinline></video>
+    
+    <video id="localVideo" autoplay playsinline src="stream"></video>
+    <video id="remoteVideo" autoplay playsinline src="stream"></video>
  
 
     <div id="errorMsg"></div>
@@ -140,8 +141,17 @@
     }
   
     function handleSuccess(stream) {
-      const video = document.querySelector('video');
-      video.srcObject = stream;
+      //const video = document.querySelector('video');
+      //video.srcObject = stream;
+
+        const video1 = document.querySelector('#localVideo');
+        const video2 = document.querySelector('#remoteVideo');
+        const videoTracks = stream.getVideoTracks();
+        console.log('Got stream with constraints:', constraints);
+        console.log(`Using video device: ${videoTracks[0].label}`);
+        //window.stream = stream; // make variable available to browser console
+        video2.srcObject = stream;
+        video1.srcObject = stream;
     }
   
     function handleError(error) {
