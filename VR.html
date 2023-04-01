@@ -40,10 +40,11 @@
     <video id="video2" autoplay playsinline></video>   
 
     -->
-    console.log(document.fullscreenEnabled)
-    <button id="fullScreen">Full Screen</button>
+    
+    
     <video id="localVideo" autoplay playsinline></video>
     <video id="remoteVideo" autoplay playsinline></video>
+    <button id="fullScreen">Full Screen</button>
  
 
     <div id="errorMsg"></div>
@@ -54,11 +55,24 @@
 </div>
 
 
+<style>
+  #centerBtn {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+</style>
+
 <script >
-    const fullScreen = document.querySelector('#fullScreen');
-    fullScreen.addEventListener('click', () => {
-        document.documentElement.requestFullscreen();
-    });
+  console.log(document.fullscreenEnabled)
+  const fullScreen = document.querySelector('#fullScreen');
+  fullScreen.addEventListener('click', () => {
+      document.documentElement.requestFullscreen();
+      fullScreen.style.display = 'none';
+  });
+
 </script>
 
   
@@ -172,9 +186,7 @@
 -->
 
 <script src="js/adapter-latest.js"></script>
-<!--
-    <script src="js/main.js"></script>
--->
+
 
 <script src="js/ga.js"></script>
 
