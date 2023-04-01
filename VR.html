@@ -110,11 +110,13 @@
       video: true
     };
     
-
-    constraints.video = { deviceId: { exact: localStorage.getItem('deviceId') } };
+    const deviceId=localStorage.getItem('deviceId')
+    constraints.video = { deviceId: { exact: deviceId } };
+    console.log(deviceId)
+    document.getElementById('cons').innerHTML = deviceId
     init();
 
-    
+
     function errorMsg(msg, error) {
     const errorElement = document.querySelector('#errorMsg');
     errorElement.innerHTML += `<p>${msg}</p>`;
