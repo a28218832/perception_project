@@ -131,7 +131,18 @@
         });
       })
       .catch(error => console.error(error));
-  
+
+
+
+    const video1 = document.querySelector('#localVideo');
+    const video2 = document.querySelector('#remoteVideo');
+    //const videoTracks = stream.getVideoTracks();
+    //console.log('Got stream with constraints:', constraints);
+    //console.log(`Using video device: ${videoTracks[0].label}`);
+    //window.stream = stream; // make variable available to browser console
+    video2.srcObject = window.stream;
+    video1.srcObject = window.stream;
+
     async function init() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -151,8 +162,8 @@
         console.log('Got stream with constraints:', constraints);
         console.log(`Using video device: ${videoTracks[0].label}`);
         //window.stream = stream; // make variable available to browser console
-        video2.srcObject = stream;
-        video1.srcObject = stream;
+        video2.srcObject = window.stream;
+        video1.srcObject = window.stream;
     }
   
     function handleError(error) {
