@@ -44,7 +44,7 @@
     
     <video id="localVideo" autoplay playsinline></video>
     <video id="remoteVideo" autoplay playsinline></video>
-    <button id="fullScreen">Full Screen</button>
+    
  
 
     <div id="errorMsg"></div>
@@ -54,12 +54,24 @@
 
 </div>
 
+<div id="btnContainer">
+  <button id="fullScreen">Full Screen</button>
+</div>
+
 
 <style>
+  #btnContainer {
+    position: fixed; 
+    bottom: 50%;
+    width: 50%;
+    height: 100px;
+    background-color: white;
+  }
   #centerBtn {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     transform: translate(-50%, -50%);
     z-index: 9999;
   }
