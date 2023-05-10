@@ -91,53 +91,112 @@
 </script>
 
   
-  <script>
-    
-    const constraints = {
-      audio: false,
-      video: true
-    };
-    
-    const deviceId=localStorage.getItem('deviceId')
-    constraints.video = { deviceId: { exact: deviceId } };
-    init();
+<script>
+  
+  const constraints = {
+    audio: false,
+    video: true
+  };
+  
+  const deviceId=localStorage.getItem('deviceId')
+  constraints.video = { deviceId: { exact: deviceId } };
+  init();
 
 
-    function errorMsg(msg, error) {
-    const errorElement = document.querySelector('#errorMsg');
-    errorElement.innerHTML += `<p>${msg}</p>`;
-    if (typeof error !== 'undefined') {
-      console.error(error);
+  function errorMsg(msg, error) {
+  const errorElement = document.querySelector('#errorMsg');
+  errorElement.innerHTML += `<p>${msg}</p>`;
+  if (typeof error !== 'undefined') {
+    console.error(error);
+  }
+}
+
+
+  async function init() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      handleSuccess(stream);
+    } catch (e) {
+      handleError(e);
     }
   }
 
+  function handleSuccess(stream) {
+    //const video = document.querySelector('video');
+    //video.srcObject = stream;
 
-    async function init() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        handleSuccess(stream);
-      } catch (e) {
-        handleError(e);
-      }
-    }
-  
-    function handleSuccess(stream) {
-      //const video = document.querySelector('video');
-      //video.srcObject = stream;
+      const video1 = document.querySelector('#localVideo');
+      const video2 = document.querySelector('#remoteVideo');
+      const videoTracks = stream.getVideoTracks();
 
-        const video1 = document.querySelector('#localVideo');
-        const video2 = document.querySelector('#remoteVideo');
-        const videoTracks = stream.getVideoTracks();
+      //window.stream = stream; // make variable available to browser console
+      video2.srcObject = stream;
+      video1.srcObject = stream;
+  }
 
-        //window.stream = stream; // make variable available to browser console
-        video2.srcObject = stream;
-        video1.srcObject = stream;
-    }
-  
-    function handleError(error) {
-      console.error(error);
-    }
-  </script>
+  function handleError(error) {
+    console.error(error);
+  }
+
+//~~~~~
+
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+
+localVideo.style.objectPosition="50%"
+remoteVideo.style.objectPosition="50%"
+
+
+
+const increment = 1; // 調整的增量
+
+// 監聽鍵盤事件
+document.addEventListener('keydown', handleKeyDown);
+
+// 監聽音量鍵事件
+document.addEventListener('volumechange', handleVolumeChange);
+
+// 鍵盤事件處理函式
+function handleKeyDown(event) {
+  if (event.key === 'ArrowUp') {
+    adjustObjectPosition(localVideo, -increment);
+    adjustObjectPosition(remoteVideo, increment);
+  } else if (event.key === 'ArrowDown') {
+    adjustObjectPosition(localVideo, increment);
+    adjustObjectPosition(remoteVideo, -increment);
+  }
+}
+
+// 音量鍵事件處理函式
+function handleVolumeChange(event) {
+  const volume = event.target.volume;
+  if (volume > 0.5) {
+    adjustObjectPosition(localVideo, -increment);
+    adjustObjectPosition(remoteVideo, increment);
+  } else {
+    adjustObjectPosition(localVideo, increment);
+    adjustObjectPosition(remoteVideo, -increment);
+  }
+}
+
+// 調整元素的 object-position
+function adjustObjectPosition(element, increment) {
+  const currentObjectPosition = parseObjectPosition(element.style.objectPosition);
+
+  console.log(currentObjectPosition)
+  const newObjectPosition = currentObjectPosition + increment;
+  element.style.objectPosition = `${newObjectPosition}%`;
+}
+
+// 解析 object-position 屬性的值
+function parseObjectPosition(value) {
+  const match = value.match(/(-?\d+)/);
+  return match ? parseInt(match[0]) : 0;
+}
+
+
+
+</script>
   
 
 
