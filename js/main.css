@@ -45,12 +45,14 @@ video {
 
 #localVideo {
   position: absolute;
+  object-position: 45%;
   left: 0;
   top: 0;
 }
 
 #remoteVideo {
   position: absolute;
+  object-position: 55%;
   right: 0;
   top: 0;
 }
