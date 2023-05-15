@@ -143,8 +143,8 @@
 const localVideo = document.getElementById('localVideo');
 const remoteVideo = document.getElementById('remoteVideo');
 
-localVideo.style.objectPosition="50%"
-remoteVideo.style.objectPosition="50%"
+localVideo.style.objectPosition="65%"
+remoteVideo.style.objectPosition="35%"
 
 
 
@@ -152,9 +152,6 @@ const increment = 1; // 調整的增量
 
 // 監聽鍵盤事件
 document.addEventListener('keydown', handleKeyDown);
-
-// 監聽音量鍵事件
-document.addEventListener('volumechange', handleVolumeChange);
 
 // 鍵盤事件處理函式
 function handleKeyDown(event) {
@@ -167,17 +164,7 @@ function handleKeyDown(event) {
   }
 }
 
-// 音量鍵事件處理函式
-function handleVolumeChange(event) {
-  const volume = event.target.volume;
-  if (volume > 0.5) {
-    adjustObjectPosition(localVideo, -increment);
-    adjustObjectPosition(remoteVideo, increment);
-  } else {
-    adjustObjectPosition(localVideo, increment);
-    adjustObjectPosition(remoteVideo, -increment);
-  }
-}
+
 
 // 調整元素的 object-position
 function adjustObjectPosition(element, increment) {
